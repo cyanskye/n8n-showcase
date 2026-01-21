@@ -92,6 +92,7 @@ export default function Home() {
   const [donateModalOpen, setDonateModalOpen] = useState(false);
   const [selectedWorkflow, setSelectedWorkflow] = useState<Workflow | null>(null);
   const [isDark, setIsDark] = useState(true);
+  const [displayCount, setDisplayCount] = useState(60);
 
   // 主题切换
   useEffect(() => {
@@ -101,6 +102,28 @@ export default function Home() {
       document.documentElement.classList.remove("dark");
     }
   }, [isDark]);
+
+  // 禁用右键菜单和开发者工具快捷键
+  useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+        (e.ctrlKey && e.key === 'U')
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   // 提取所有唯一标签
   const allTags = useMemo(() => {
@@ -136,6 +159,11 @@ export default function Home() {
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
   };
+
+  // 切换分类/搜索时重置显示数量
+  useEffect(() => {
+    setDisplayCount(60);
+  }, [selectedCategory, searchQuery, selectedTags]);
 
   const handleImport = (workflow: Workflow) => {
     setSelectedWorkflow(workflow);
@@ -258,7 +286,7 @@ export default function Home() {
 
             {/* Workflows Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredWorkflows.slice(0, 60).map((workflow, index) => (
+              {filteredWorkflows.slice(0, displayCount).map((workflow, index) => (
                 <motion.div
                   key={workflow.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -340,12 +368,15 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Load More Hint */}
-            {filteredWorkflows.length > 60 && (
+            {/* Load More Button */}
+            {filteredWorkflows.length > displayCount && (
               <div className="mt-8 text-center">
-                <p className="text-gray-500">
-                  显示前 60 个结果，共 {filteredWorkflows.length} 个
-                </p>
+                <button
+                  onClick={() => setDisplayCount(prev => prev + 60)}
+                  className="px-6 py-3 bg-n8n-orange/20 hover:bg-n8n-orange text-n8n-orange hover:text-white font-medium rounded-xl transition-all"
+                >
+                  加载更多（还有 {filteredWorkflows.length - displayCount} 个）
+                </button>
               </div>
             )}
 

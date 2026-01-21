@@ -3,8 +3,26 @@
 import { ExternalLink, Play, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 
-// 推荐服务配置（7个卡片 = 5个CPS + 1个Zeabur + 1个课程）
+// 推荐服务配置（9个卡片 = 5个CPS + 1个Zeabur + 1个课程 + 2个新增）
 const SERVICES = [
+  {
+    id: 'magicagi',
+    name: 'MagicAgi 主站',
+    description: 'AI 驱动的个人品牌网站，AI 服务与自动化解决方案',
+    url: 'https://magicagi.top',
+    tag: '主站',
+    color: 'from-emerald-500 to-teal-600',
+    icon: '🏠'
+  },
+  {
+    id: 'claude-agents',
+    name: 'Claude Agents 指南',
+    description: 'Claude Code 智能代理使用指南与最佳实践',
+    url: 'https://claudeagents.magicagi.top',
+    tag: 'AI 代理',
+    color: 'from-amber-500 to-orange-600',
+    icon: '🤖'
+  },
   {
     id: 'zhipu',
     name: '智谱 GLM Coding',
