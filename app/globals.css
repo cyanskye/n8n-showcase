@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --n8n-orange: #FF6D5A;
+  --n8n-dark: #1a1a2e;
+  --n8n-darker: #0f0f1a;
+}
+
+body {
+  background: var(--n8n-darker);
+  color: #e0e0e0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--n8n-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a4a6a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--n8n-orange);
+}
+
+/* Workflow card hover effect */
+.workflow-card {
+  transition: all 0.3s ease;
+}
+
+.workflow-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(255, 109, 90, 0.15);
+}
+
+/* Node type badges */
+.node-badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
+}
+
+/* Search input focus */
+.search-input:focus {
+  box-shadow: 0 0 0 3px rgba(255, 109, 90, 0.3);
+}
+
+/* Category tabs */
+.category-tab {
+  @apply px-4 py-2 rounded-lg transition-all duration-200;
+}
+
+.category-tab:hover {
+  @apply bg-white/10;
+}
+
+.category-tab.active {
+  @apply bg-n8n-orange text-white;
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #FF6D5A 0%, #FF9A8B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

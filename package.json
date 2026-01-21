@@ -1,0 +1,28 @@
+{
+  "name": "n8n-showcase",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm run generate-data && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "generate-data": "node scripts/generate-workflows-data.js"
+  },
+  "dependencies": {
+    "next": "14.2.33",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "lucide-react": "^0.460.0",
+    "framer-motion": "^11.11.11"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5",
+    "tailwindcss": "^3.4.15",
+    "postcss": "^8",
+    "autoprefixer": "^10"
+  }
+}
