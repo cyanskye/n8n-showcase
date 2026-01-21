@@ -472,9 +472,18 @@ function generateWorkflowsData() {
     version: '2.0.0'
   };
 
-  // 写入数据文件
+  // 写入数据文件到 data/ 目录（供开发使用）
   const outputPath = path.resolve(__dirname, '../data/workflows.json');
   fs.writeFileSync(outputPath, JSON.stringify(data, null, 2));
+
+  // 同时写入到 public/data/ 目录（供静态导出使用）
+  const publicDataDir = path.resolve(__dirname, '../public/data');
+  if (!fs.existsSync(publicDataDir)) {
+    fs.mkdirSync(publicDataDir, { recursive: true });
+  }
+  const publicOutputPath = path.join(publicDataDir, 'workflows.json');
+  fs.writeFileSync(publicOutputPath, JSON.stringify(data, null, 2));
+  console.log(`   已写入 public/data/workflows.json`);
 
   // 复制工作流文件到 public 目录
   const publicWorkflowsDir = path.resolve(__dirname, '../public/workflows');
