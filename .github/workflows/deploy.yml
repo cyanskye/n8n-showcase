@@ -27,7 +27,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: next build  # 跳过 generate-data，使用仓库中已提交的数据
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
