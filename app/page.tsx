@@ -91,17 +91,7 @@ export default function Home() {
   const [importModalOpen, setImportModalOpen] = useState(false);
   const [donateModalOpen, setDonateModalOpen] = useState(false);
   const [selectedWorkflow, setSelectedWorkflow] = useState<Workflow | null>(null);
-  const [isDark, setIsDark] = useState(true);
   const [displayCount, setDisplayCount] = useState(60);
-
-  // 主题切换
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDark]);
 
   // 禁用右键菜单和开发者工具快捷键
   useEffect(() => {
@@ -171,13 +161,11 @@ export default function Home() {
   };
 
   return (
-    <div className={`min-h-screen transition-colors ${isDark ? "bg-gradient-to-br from-n8n-darker via-n8n-dark to-n8n-darker" : "bg-gradient-to-br from-gray-50 via-white to-gray-100"}`}>
+    <div className="min-h-screen bg-gradient-to-br from-n8n-darker via-n8n-dark to-n8n-darker">
       <Header
         activeTab={activeTab}
         onTabChange={setActiveTab}
         onDonateClick={() => setDonateModalOpen(true)}
-        isDark={isDark}
-        onThemeToggle={() => setIsDark(!isDark)}
       />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
@@ -186,17 +174,17 @@ export default function Home() {
           <>
             {/* Hero Section */}
             <section className="text-center mb-10">
-              <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${isDark ? "text-white" : "text-gray-900"}`}>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                 <span className="gradient-text">2000+</span> n8n 自动化工作流模板
               </h2>
-              <p className={isDark ? "text-gray-400" : "text-gray-600"}>
+              <p className="text-gray-400">
                 按使用场景分类，一键导入到你的 n8n 实例
               </p>
             </section>
 
             {/* Category Grid */}
             <section className="mb-8">
-              <h3 className={`text-lg font-semibold mb-4 ${isDark ? "text-white" : "text-gray-900"}`}>按场景浏览</h3>
+              <h3 className="text-lg font-semibold mb-4 text-white">按场景浏览</h3>
               <CategoryGrid
                 categories={data.categories}
                 selectedCategory={selectedCategory}
@@ -213,11 +201,7 @@ export default function Home() {
                   placeholder="搜索工作流名称、标签、节点类型..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className={`search-input w-full pl-12 pr-4 py-3 border rounded-xl placeholder-gray-500 focus:outline-none focus:border-n8n-orange/50 transition-all ${
-                    isDark
-                      ? "bg-n8n-gray/50 border-white/10 text-white"
-                      : "bg-white border-gray-300 text-gray-900"
-                  }`}
+                  className="search-input w-full pl-12 pr-4 py-3 border rounded-xl placeholder-gray-500 focus:outline-none focus:border-n8n-orange/50 transition-all bg-n8n-gray/50 border-white/10 text-white"
                 />
                 <button
                   onClick={() => setShowFilters(!showFilters)}
@@ -238,7 +222,7 @@ export default function Home() {
                     exit={{ height: 0, opacity: 0 }}
                     className="overflow-hidden"
                   >
-                    <div className={`p-4 rounded-xl border ${isDark ? "bg-n8n-gray/30 border-white/5" : "bg-gray-50 border-gray-200"}`}>
+                    <div className="p-4 rounded-xl border bg-n8n-gray/30 border-white/5">
                       <div className="flex items-center gap-2 mb-3">
                         <Tag className="w-4 h-4 text-gray-400" />
                         <span className="text-sm text-gray-400">标签筛选</span>
@@ -259,9 +243,7 @@ export default function Home() {
                             className={`px-3 py-1 rounded-full text-xs transition-all ${
                               selectedTags.includes(tag)
                                 ? "bg-n8n-orange text-white"
-                                : isDark
-                                ? "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
-                                : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+                                : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
                             }`}
                           >
                             {tag}
@@ -276,8 +258,8 @@ export default function Home() {
 
             {/* Results Count */}
             <div className="mb-6 flex items-center justify-between">
-              <p className={isDark ? "text-gray-400" : "text-gray-600"}>
-                找到 <span className={`font-medium ${isDark ? "text-white" : "text-gray-900"}`}>{filteredWorkflows.length}</span> 个工作流
+              <p className="text-gray-400">
+                找到 <span className="font-medium text-white">{filteredWorkflows.length}</span> 个工作流
               </p>
               <p className="text-xs text-gray-500">
                 更新于 {new Date(data.lastUpdated).toLocaleDateString("zh-CN")}
@@ -292,23 +274,19 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: Math.min(index * 0.02, 0.5) }}
-                  className={`workflow-card group rounded-2xl border overflow-hidden ${
-                    isDark
-                      ? "bg-gradient-to-br from-n8n-gray/50 to-n8n-gray/30 border-white/5"
-                      : "bg-white border-gray-200 shadow-sm"
-                  }`}
+                  className="workflow-card group rounded-2xl border overflow-hidden bg-gradient-to-br from-n8n-gray/50 to-n8n-gray/30 border-white/5"
                 >
                   {/* Card Header */}
-                  <div className={`p-5 border-b ${isDark ? "border-white/5" : "border-gray-100"}`}>
+                  <div className="p-5 border-b border-white/5">
                     <div className="flex items-start justify-between gap-3 mb-3">
-                      <h3 className={`font-semibold group-hover:text-n8n-orange transition-colors line-clamp-2 ${isDark ? "text-white" : "text-gray-900"}`}>
+                      <h3 className="font-semibold group-hover:text-n8n-orange transition-colors line-clamp-2 text-white">
                         {workflow.name}
                       </h3>
                       <span className="shrink-0 text-lg" title={workflow.categoryName}>
                         {workflow.categoryIcon}
                       </span>
                     </div>
-                    <p className={`text-sm line-clamp-2 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+                    <p className="text-sm line-clamp-2 text-gray-400">
                       {workflow.description}
                     </p>
                   </div>
@@ -344,7 +322,7 @@ export default function Home() {
                         {workflow.tags.slice(0, 3).map((tag) => (
                           <span
                             key={tag}
-                            className={`px-2 py-0.5 text-xs rounded ${isDark ? "bg-white/5 text-gray-400" : "bg-gray-100 text-gray-600"}`}
+                            className="px-2 py-0.5 text-xs rounded bg-white/5 text-gray-400"
                           >
                             #{tag}
                           </span>
@@ -354,7 +332,7 @@ export default function Home() {
                   </div>
 
                   {/* Card Footer */}
-                  <div className={`px-5 py-3 border-t flex items-center justify-between ${isDark ? "bg-white/2 border-white/5" : "bg-gray-50 border-gray-100"}`}>
+                  <div className="px-5 py-3 border-t flex items-center justify-between bg-white/2 border-white/5">
                     <span className="text-xs text-gray-500">{workflow.categoryName}</span>
                     <button
                       onClick={() => handleImport(workflow)}
@@ -383,13 +361,13 @@ export default function Home() {
             {/* Empty State */}
             {filteredWorkflows.length === 0 && (
               <div className="text-center py-20">
-                <div className={`w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center ${isDark ? "bg-n8n-gray/50" : "bg-gray-100"}`}>
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center bg-n8n-gray/50">
                   <Search className="w-10 h-10 text-gray-600" />
                 </div>
-                <h3 className={`text-xl font-semibold mb-2 ${isDark ? "text-white" : "text-gray-900"}`}>
+                <h3 className="text-xl font-semibold mb-2 text-white">
                   未找到匹配的工作流
                 </h3>
-                <p className={isDark ? "text-gray-400" : "text-gray-600"}>
+                <p className="text-gray-400">
                   尝试调整搜索关键词或筛选条件
                 </p>
               </div>
