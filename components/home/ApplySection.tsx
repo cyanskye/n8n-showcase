@@ -1,170 +1,64 @@
 "use client";
 
 import { useState } from "react";
-import { AlertCircle, Clock, User, Shield, CheckCircle, Server, Wrench, MessageCircle } from "lucide-react";
+import { Server, Wrench, CheckCircle, Clock, Shield, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
+type ApplyType = "trial" | "deploy" | null;
+
 export default function ApplySection() {
-  const [agreed, setAgreed] = useState(false);
+  const [selectedType, setSelectedType] = useState<ApplyType>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!agreed) return;
+  const handleTrialApply = () => {
+    const subject = encodeURIComponent("申请 n8n 在线体验账号");
+    const body = encodeURIComponent(`你好，
 
-    // 构造 mailto 链接
-    const subject = encodeURIComponent("申请体验 n8n 平台");
-    const body = encodeURIComponent(`您好，
+我希望申请 n8n 在线体验账号。
 
-我希望申请体验 n8n 在线平台。
+我已了解以下条款：
+- 体验期最长 15 天
+- 数据沙箱隔离，到期自动清理
+- API 密钥需自己准备，仅供本人使用
+- 需要科学上网访问
 
-我已阅读并同意以下条款：
-1. 账号仅限本人使用，不得共享给他人
-2. API 密钥和账号充值由本人负责
-3. 首次开通后 7 天内未登录将自动回收账号
-
-期待您的回复！`);
+期待开通！`);
 
     window.open(`mailto:magicsang666@gmail.com?subject=${subject}&body=${body}`, "_blank");
     setSubmitted(true);
   };
 
-  return (
-    <div className="max-w-2xl mx-auto">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
-      >
-        <h2 className="text-2xl font-bold text-white mb-3">
-          🚀 申请体验 n8n 在线平台
-        </h2>
-        <p className="text-gray-400">
-          免费获取 n8n 在线实例，无需本地安装，邮箱申请后 24 小时内开通
-        </p>
-      </motion.div>
+  const handleDeployApply = () => {
+    const subject = encodeURIComponent("咨询 n8n 远程部署服务");
+    const body = encodeURIComponent(`你好，
 
-      {/* 平台说明 */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.05 }}
-        className="mb-6 p-5 bg-blue-500/10 border border-blue-500/20 rounded-xl"
-      >
-        <div className="flex items-start gap-3 mb-4">
-          <Server className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-          <h3 className="font-semibold text-blue-400">平台说明</h3>
-        </div>
-        <ul className="space-y-3 text-sm">
-          <li className="flex items-start gap-3 text-gray-300">
-            <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
-            <span>我们提供 <strong className="text-green-400">在线运行环境</strong>，您无需自己搭建服务器或安装软件</span>
-          </li>
-          <li className="flex items-start gap-3 text-gray-300">
-            <Shield className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-            <span>各种 <strong className="text-amber-400">API 密钥</strong>（如 OpenAI、Telegram Bot 等）需要您自己准备，平台不提供</span>
-          </li>
-          <li className="flex items-start gap-3 text-gray-300">
-            <Clock className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
-            <span>免费体验期限为 <strong className="text-purple-400">7 天</strong>，足够您熟悉平台和测试工作流</span>
-          </li>
-        </ul>
-      </motion.div>
+我希望咨询 n8n 远程部署服务。
 
-      {/* 深度使用说明 */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.08 }}
-        className="mb-6 p-5 bg-purple-500/10 border border-purple-500/20 rounded-xl"
-      >
-        <div className="flex items-start gap-3 mb-4">
-          <Wrench className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
-          <h3 className="font-semibold text-purple-400">需要深度使用？</h3>
-        </div>
-        <div className="space-y-3 text-sm text-gray-300">
-          <p>
-            如果您需要 <strong className="text-purple-400">长期深度使用</strong>，但自己不会搭建 n8n 服务：
-          </p>
-          <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
-            <MessageCircle className="w-4 h-4 text-n8n-orange shrink-0 mt-0.5" />
-            <span>
-              可以联系我，我可以帮你 <strong className="text-n8n-orange">远程搭建</strong> 专属的 n8n 实例，具体费用根据实际需求沟通
-            </span>
-          </div>
-          <p className="text-xs text-gray-500">
-            邮箱：magicsang666@gmail.com
-          </p>
-        </div>
-      </motion.div>
+【我的需求】
+（请简要描述你的使用场景和需求）
 
-      {/* 说明条款 */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="mb-8 p-5 bg-amber-500/10 border border-amber-500/20 rounded-xl"
-      >
-        <div className="flex items-start gap-3 mb-4">
-          <AlertCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-          <h3 className="font-semibold text-amber-400">申请须知（请仔细阅读）</h3>
-        </div>
-        <ul className="space-y-3 text-sm">
-          <li className="flex items-start gap-3 text-gray-300">
-            <User className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-            <span><strong>账号专属：</strong>开通的 n8n 账号仅限您本人使用，不支持共享给他人使用</span>
-          </li>
-          <li className="flex items-start gap-3 text-gray-300">
-            <Shield className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
-            <span><strong>自备资源：</strong>API 密钥（OpenAI 等）和相关账号充值需您自行处理，平台不提供</span>
-          </li>
-          <li className="flex items-start gap-3 text-gray-300">
-            <Clock className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-            <span><strong>账号回收：</strong>首次开通后，若 <strong className="text-red-400">7 天内未登录</strong>，账号将被自动关闭回收</span>
-          </li>
-          <li className="flex items-start gap-3 text-gray-300">
-            <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-            <span><strong>访问限制：</strong>需要 <strong className="text-amber-400">科学上网</strong> 才能访问</span>
-          </li>
-        </ul>
-      </motion.div>
 
-      {/* 申请表单 */}
-      {!submitted ? (
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          onSubmit={handleSubmit}
-          className="p-6 bg-n8n-gray/30 border border-white/5 rounded-xl"
-        >
-          <div className="mb-6">
-            <label className="flex items-start gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={agreed}
-                onChange={(e) => setAgreed(e.target.checked)}
-                className="mt-1 w-4 h-4 rounded border-gray-600 text-n8n-orange focus:ring-n8n-orange focus:ring-offset-0"
-              />
-              <span className="text-sm text-gray-400">
-                我已阅读并同意上述申请须知，理解账号仅限本人使用、需自备 API 资源、7 天未登录将被回收
-              </span>
-            </label>
-          </div>
 
-          <button
-            type="submit"
-            disabled={!agreed}
-            className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white font-medium rounded-xl transition-all"
-          >
-            发送申请邮件
-          </button>
+【预算范围】
+（请填写你愿意支付的酬劳，如：100-200 元）
 
-          <p className="mt-4 text-center text-xs text-gray-500">
-            点击后将打开邮件客户端，发送至 magicsang666@gmail.com
-          </p>
-        </motion.form>
-      ) : (
+
+
+期待你的回复！`);
+
+    window.open(`mailto:magicsang666@gmail.com?subject=${subject}&body=${body}`, "_blank");
+    setSubmitted(true);
+  };
+
+  const resetForm = () => {
+    setSelectedType(null);
+    setSubmitted(false);
+  };
+
+  // 提交成功状态
+  if (submitted) {
+    return (
+      <div className="max-w-2xl mx-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -172,17 +66,134 @@ export default function ApplySection() {
         >
           <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
           <h3 className="text-xl font-semibold text-white mb-2">
-            申请邮件已准备就绪！
+            邮件已准备就绪！
           </h3>
           <p className="text-gray-400 mb-4">
-            请在弹出的邮件客户端中发送邮件，我们会尽快为您开通账号
+            请在弹出的邮件客户端中发送邮件，我会尽快回复
           </p>
           <button
-            onClick={() => setSubmitted(false)}
+            onClick={resetForm}
             className="text-sm text-n8n-orange hover:underline"
           >
-            重新填写
+            返回
           </button>
+        </motion.div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-3xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-8"
+      >
+        <h2 className="text-2xl font-bold text-white mb-3">
+          🚀 选择你需要的服务
+        </h2>
+        <p className="text-gray-400">
+          快速体验或专属部署，按需选择
+        </p>
+      </motion.div>
+
+      {/* 两个选项卡片 */}
+      <div className="grid md:grid-cols-2 gap-6 mb-8">
+        {/* 在线体验 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          onClick={() => setSelectedType("trial")}
+          className={`cursor-pointer p-6 rounded-xl border transition-all ${
+            selectedType === "trial"
+              ? "bg-blue-500/20 border-blue-500/50 shadow-lg shadow-blue-500/10"
+              : "bg-n8n-gray/30 border-white/5 hover:border-white/20"
+          }`}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className={`p-3 rounded-xl ${selectedType === "trial" ? "bg-blue-500/30" : "bg-white/5"}`}>
+              <Server className={`w-6 h-6 ${selectedType === "trial" ? "text-blue-400" : "text-gray-400"}`} />
+            </div>
+            <div>
+              <h3 className="font-semibold text-white">在线体验</h3>
+              <p className="text-xs text-green-400">免费</p>
+            </div>
+          </div>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-blue-400" />
+              最长 15 天体验期
+            </li>
+            <li className="flex items-center gap-2">
+              <Shield className="w-4 h-4 text-blue-400" />
+              沙箱隔离，到期自动清理
+            </li>
+            <li className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-amber-400" />
+              需科学上网 + 自备 API
+            </li>
+          </ul>
+        </motion.div>
+
+        {/* 远程部署 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          onClick={() => setSelectedType("deploy")}
+          className={`cursor-pointer p-6 rounded-xl border transition-all ${
+            selectedType === "deploy"
+              ? "bg-purple-500/20 border-purple-500/50 shadow-lg shadow-purple-500/10"
+              : "bg-n8n-gray/30 border-white/5 hover:border-white/20"
+          }`}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className={`p-3 rounded-xl ${selectedType === "deploy" ? "bg-purple-500/30" : "bg-white/5"}`}>
+              <Wrench className={`w-6 h-6 ${selectedType === "deploy" ? "text-purple-400" : "text-gray-400"}`} />
+            </div>
+            <div>
+              <h3 className="font-semibold text-white">远程部署</h3>
+              <p className="text-xs text-purple-400">付费服务</p>
+            </div>
+          </div>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-purple-400" />
+              专属 n8n 实例，长期使用
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-purple-400" />
+              帮你搭建，省心省力
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-purple-400" />
+              费用根据需求沟通
+            </li>
+          </ul>
+        </motion.div>
+      </div>
+
+      {/* 申请按钮 */}
+      {selectedType && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center"
+        >
+          <button
+            onClick={selectedType === "trial" ? handleTrialApply : handleDeployApply}
+            className={`px-8 py-3 font-medium rounded-xl transition-all ${
+              selectedType === "trial"
+                ? "bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600"
+                : "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+            } text-white`}
+          >
+            {selectedType === "trial" ? "发送体验申请邮件" : "发送部署咨询邮件"}
+          </button>
+          <p className="mt-3 text-xs text-gray-500">
+            点击后将打开邮件客户端
+          </p>
         </motion.div>
       )}
     </div>
