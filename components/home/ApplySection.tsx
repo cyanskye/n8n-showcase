@@ -12,7 +12,7 @@ export default function ApplySection() {
 
   const handleTrialApply = () => {
     const subject = encodeURIComponent("申请 n8n 在线体验账号");
-    const body = encodeURIComponent(`你好，
+    const body = encodeURIComponent(`神奇桑桑，你好
 
 我希望申请 n8n 在线体验账号。
 
@@ -20,7 +20,7 @@ export default function ApplySection() {
 - 体验期最长 15 天
 - 数据沙箱隔离，到期自动清理
 - API 密钥需自己准备，仅供本人使用
-- 需要科学上网访问
+- 需要自备网络访问条件
 
 期待开通！`);
 
@@ -30,7 +30,7 @@ export default function ApplySection() {
 
   const handleDeployApply = () => {
     const subject = encodeURIComponent("咨询 n8n 远程部署服务");
-    const body = encodeURIComponent(`你好，
+    const body = encodeURIComponent(`神奇桑桑，你好
 
 我希望咨询 n8n 远程部署服务。
 
@@ -131,7 +131,7 @@ export default function ApplySection() {
             </li>
             <li className="flex items-center gap-2">
               <AlertCircle className="w-4 h-4 text-amber-400" />
-              需科学上网 + 自备 API
+              需自备网络访问条件 + API
             </li>
           </ul>
         </motion.div>
@@ -193,6 +193,9 @@ export default function ApplySection() {
           </button>
           <p className="mt-3 text-xs text-gray-500">
             点击后将打开邮件客户端
+          </p>
+          <p className="mt-2 text-xs text-gray-500">
+            所有邮件均会在 24 小时内回复，感谢您的耐心等待
           </p>
         </motion.div>
       )}
